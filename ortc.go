@@ -578,7 +578,7 @@ func canConsume(consumableParams RtpParameters, caps RtpCapabilities) (ok bool, 
 // It reduces encodings to just one and takes into account given RTP capabilities
 // to reduce codecs, codecs" RTCP feedback and header extensions, and also enables
 // or disabled RTX.
-func getConsumerRtpParameters(consumableParams RtpParameters, caps RtpCapabilities, pipe bool) (consumerParams RtpParameters, err error) {
+func getConsumerRtpParameters(consumableParams RtpParameters, caps RtpCapabilities,  ssrc uint32, pipe bool) (consumerParams RtpParameters, err error) {
 	for _, capCodec := range caps.Codecs {
 		if err = validateRtpCodecCapability(capCodec); err != nil {
 			return
@@ -700,6 +700,13 @@ func getConsumerRtpParameters(consumableParams RtpParameters, caps RtpCapabiliti
 	if rtxSupported {
 		consumerEncoding.Rtx = &RtpEncodingRtx{
 			Ssrc: generateRandomNumber(),
+		}
+	}
+
+	if ssrc != 0 {
+		consumerEncoding.Ssrc = ssrc
+		if rtxSupported {
+			consumerEncoding.Rtx.Ssrc = ssrc + 1
 		}
 	}
 

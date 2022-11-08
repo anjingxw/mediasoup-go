@@ -12,7 +12,7 @@ type PlainTransportOptions struct {
 	ListenIp TransportListenIp `json:"listenIp,omitempty"`
 
 	// RtcpMux define wether use RTCP-mux (RTP and RTCP in the same port). Default true.
-	RtcpMux *bool `json:"rtcpMux,omitempty"`
+	RtcpMux bool `json:"rtcpMux,omitempty"`
 
 	// Comedia define whether remote IP:port should be auto-detected based on first RTP/RTCP
 	// packet received. If enabled, connect() method must not be called unless

@@ -329,7 +329,7 @@ func (router *Router) CreateWebRtcTransport(option WebRtcTransportOptions) (tran
 // CreatePlainTransport create a PlainTransport.
 func (router *Router) CreatePlainTransport(option PlainTransportOptions) (transport *PlainTransport, err error) {
 	options := &PlainTransportOptions{
-		RtcpMux:            Bool(true),
+		RtcpMux:            true,
 		NumSctpStreams:     NumSctpStreams{OS: 1024, MIS: 1024},
 		MaxSctpMessageSize: 262144,
 		SctpSendBufferSize: 262144,

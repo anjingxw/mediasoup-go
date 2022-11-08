@@ -589,7 +589,7 @@ func (transport *Transport) Consume(options ConsumerOptions) (consumer *Consumer
 		return
 	}
 
-	rtpParameters, err := getConsumerRtpParameters(producer.ConsumableRtpParameters(), rtpCapabilities, options.Pipe)
+	rtpParameters, err := getConsumerRtpParameters(producer.ConsumableRtpParameters(), rtpCapabilities, options.Ssrc, options.Pipe)
 	if err != nil {
 		return
 	}

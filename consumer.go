@@ -48,6 +48,8 @@ type ConsumerOptions struct {
 
 	// AppData is custom application data.
 	AppData interface{} `json:"appData,omitempty"`
+
+	Ssrc uint32 `json:"ssrc,omitempty"`
 }
 
 // ConsumerTraceEventType is valid types for "trace" event.
