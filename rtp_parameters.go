@@ -3,7 +3,7 @@ package mediasoup
 import (
 	"strings"
 
-	"github.com/jiyeyuran/mediasoup-go/h264"
+	"github.com/anjingxw/mediasoup-go/h264"
 )
 
 // RtpCapabilities define what mediasoup or an endpoint can receive at media level.

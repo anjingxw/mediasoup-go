@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jiyeyuran/mediasoup-go/netcodec"
+	"github.com/anjingxw/mediasoup-go/netcodec"
 )
 
 func detectNewCloseMethods(workerBin string) bool {

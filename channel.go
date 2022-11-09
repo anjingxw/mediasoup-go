@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/go-logr/logr"
-	"github.com/jiyeyuran/mediasoup-go/netcodec"
+	"github.com/anjingxw/mediasoup-go/netcodec"
 )
 
 type channelSubscriber func(event string, data []byte)
