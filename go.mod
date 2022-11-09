@@ -1,4 +1,4 @@
-module github.com/jiyeyuran/mediasoup-go
+module github.com/anjingxw/mediasoup-go
 
 go 1.15
 
