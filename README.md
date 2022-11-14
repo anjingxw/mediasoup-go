@@ -11,15 +11,15 @@ mediasoup.WorkerBin = "your mediasoup worker binary path"
 ```
 In golang project.
 ```
-import "github.com/jiyeyuran/mediasoup-go"
+import "github.com/anjingxw/mediasoup-go"
 ```
 
 ## Document
-Golang API [document](https://pkg.go.dev/github.com/jiyeyuran/mediasoup-go). mediasoup-go api is consistent with the node.js api. It would be very helpful to read official [document](https://mediasoup.org/documentation/v3/mediasoup/api/).
+Golang API [document](https://pkg.go.dev/github.com/anjingxw/mediasoup-go). mediasoup-go api is consistent with the node.js api. It would be very helpful to read official [document](https://mediasoup.org/documentation/v3/mediasoup/api/).
 
 
 ## Demo Application
-[mediasoup-go-demo](https://github.com/jiyeyuran/mediasoup-go-demo).
+[mediasoup-go-demo](https://github.com/anjingxw/mediasoup-go-demo).
 
 
 
@@ -30,8 +30,8 @@ package main
 import (
 	"encoding/json"
 
-	"github.com/jiyeyuran/mediasoup-go"
-	"github.com/jiyeyuran/mediasoup-go/h264"
+	"github.com/anjingxw/mediasoup-go"
+	"github.com/anjingxw/mediasoup-go/h264"
 )
 
 var logger = mediasoup.NewLogger("ExampleApp")

@@ -3,7 +3,7 @@ package mediasoup
 import (
 	"net"
 
-	"github.com/jiyeyuran/mediasoup-go/h264"
+	"github.com/anjingxw/mediasoup-go/h264"
 )
 
 var consumerDeviceCapabilities = RtpCapabilities{
