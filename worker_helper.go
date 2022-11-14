@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -13,7 +14,7 @@ import (
 )
 
 func detectNewCloseMethods(workerBin string) bool {
-	data, err := os.ReadFile(workerBin)
+	data, err := ioutil.ReadFile(workerBin)
 	if err != nil {
 		return false
 	}

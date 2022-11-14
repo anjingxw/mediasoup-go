@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/jiyeyuran/mediasoup-go"
-	"github.com/jiyeyuran/mediasoup-go/h264"
+	"github.com/anjingxw/mediasoup-go"
+	"github.com/anjingxw/mediasoup-go/h264"
 )
 
 var logger = mediasoup.NewLogger("ExampleApp")
