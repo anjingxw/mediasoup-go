@@ -270,9 +270,9 @@ func (router *Router) Transports() []ITransport {
 }
 
 // CreateWebRtcTransport create a WebRtcTransport.
-func (router *Router) CreateWebRtcTransport(option WebRtcTransportOptions) (transport *WebRtcTransport, err error) {
+func (router *Router) CreateWebRtcTransport(option WebRtcTransportOptions, transportId string) (transport *WebRtcTransport, err error) {
 	options := &WebRtcTransportOptions{
-		EnableUdp:                       Bool(true),
+		EnableUdp:                       true,
 		InitialAvailableOutgoingBitrate: 600000,
 		NumSctpStreams:                  NumSctpStreams{OS: 1024, MIS: 1024},
 		MaxSctpMessageSize:              262144,
@@ -291,7 +291,11 @@ func (router *Router) CreateWebRtcTransport(option WebRtcTransportOptions) (tran
 
 	method := "router.createWebRtcTransport"
 	internal := router.internal
-	internal.TransportId = uuid.NewString()
+	if len(transportId) > 0 {
+		internal.TransportId = transportId
+	} else {
+		internal.TransportId = uuid.NewString()
+	}
 
 	reqData := H{
 		"transportId":                     internal.TransportId,
@@ -326,8 +330,7 @@ func (router *Router) CreateWebRtcTransport(option WebRtcTransportOptions) (tran
 	return
 }
 
-// CreatePlainTransport create a PlainTransport.
-func (router *Router) CreatePlainTransport(option PlainTransportOptions) (transport *PlainTransport, err error) {
+func (router *Router) CreatePlainTransport(option PlainTransportOptions, transportId string) (transport *PlainTransport, err error) {
 	options := &PlainTransportOptions{
 		RtcpMux:            true,
 		NumSctpStreams:     NumSctpStreams{OS: 1024, MIS: 1024},
@@ -340,9 +343,13 @@ func (router *Router) CreatePlainTransport(option PlainTransportOptions) (transp
 	}
 
 	router.logger.V(1).Info("createPlainTransport()")
-
 	internal := router.internal
-	internal.TransportId = uuid.NewString()
+	if len(transportId) > 0 {
+		internal.TransportId = transportId
+	} else {
+		internal.TransportId = uuid.NewString()
+	}
+
 	reqData := H{
 		"transportId":        internal.TransportId,
 		"listenIp":           options.ListenIp,

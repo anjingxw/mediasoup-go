@@ -615,7 +615,11 @@ func (transport *Transport) Consume(options ConsumerOptions) (consumer *Consumer
 	}
 
 	internal := transport.internal
-	internal.ConsumerId = uuid.NewString()
+	if len(options.ConsumerId) > 0 {
+		internal.ConsumerId = options.ConsumerId
+	} else {
+		internal.ConsumerId = uuid.NewString()
+	}
 
 	tp := producer.Type()
 
@@ -782,7 +786,7 @@ func (transport *Transport) ConsumeData(options DataConsumerOptions) (dataConsum
 	if transport.data.transportType == TransportType_Direct {
 		typ = DataProducerType_Direct
 
-		if ordered != nil || maxPacketLifeTime > 0 || maxRetransmits > 0 {
+		if ordered == true || maxPacketLifeTime > 0 || maxRetransmits > 0 {
 			transport.logger.Info(
 				"consumeData() | ordered, maxPacketLifeTime and maxRetransmits are ignored when consuming data on a DirectTransport",
 				"warn", true)
@@ -791,10 +795,8 @@ func (transport *Transport) ConsumeData(options DataConsumerOptions) (dataConsum
 		typ = DataProducerType_Sctp
 
 		sctpStreamParameters = dataProducer.SctpStreamParameters()
-		// Override if given.
-		if ordered != nil {
-			sctpStreamParameters.Ordered = ordered
-		}
+		sctpStreamParameters.Ordered = ordered
+
 		if maxPacketLifeTime > 0 {
 			sctpStreamParameters.MaxPacketLifeTime = maxPacketLifeTime
 		}

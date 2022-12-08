@@ -192,10 +192,6 @@ func validateRtpHeaderExtensionParameters(ext RtpHeaderExtensionParameters) (err
 // fields with default values.
 func validateRtcpParameters(rtcp *RtcpParameters) (err error) {
 	// reducedSize is optional. If unset set it to true.
-	if rtcp.ReducedSize == nil {
-		rtcp.ReducedSize = Bool(true)
-	}
-
 	return
 }
 
@@ -256,21 +252,14 @@ func validateSctpStreamParameters(params *SctpStreamParameters) (err error) {
 	if params == nil {
 		return NewTypeError("params is nil")
 	}
-	orderedGiven := params.Ordered != nil
-
-	if params.Ordered == nil {
-		params.Ordered = Bool(true)
-	}
 
 	if params.MaxPacketLifeTime > 0 && params.MaxRetransmits > 0 {
 		return NewTypeError("cannot provide both maxPacketLifeTime and maxRetransmits")
 	}
 
-	if orderedGiven && *params.Ordered &&
+	if params.Ordered &&
 		(params.MaxPacketLifeTime > 0 || params.MaxRetransmits > 0) {
 		return NewTypeError("cannot be ordered with maxPacketLifeTime or maxRetransmits")
-	} else if !orderedGiven && (params.MaxPacketLifeTime > 0 || params.MaxRetransmits > 0) {
-		params.Ordered = Bool(false)
 	}
 
 	return
@@ -540,8 +529,8 @@ func getConsumableRtpParameters(
 
 	consumableParams.Rtcp = RtcpParameters{
 		Cname:       params.Rtcp.Cname,
-		ReducedSize: Bool(true),
-		Mux:         Bool(true),
+		ReducedSize: true,
+		Mux:         true,
 	}
 
 	return
@@ -578,7 +567,7 @@ func canConsume(consumableParams RtpParameters, caps RtpCapabilities) (ok bool, 
 // It reduces encodings to just one and takes into account given RTP capabilities
 // to reduce codecs, codecs" RTCP feedback and header extensions, and also enables
 // or disabled RTX.
-func getConsumerRtpParameters(consumableParams RtpParameters, caps RtpCapabilities,  ssrc uint32, pipe bool) (consumerParams RtpParameters, err error) {
+func getConsumerRtpParameters(consumableParams RtpParameters, caps RtpCapabilities, ssrc uint32, pipe bool) (consumerParams RtpParameters, err error) {
 	for _, capCodec := range caps.Codecs {
 		if err = validateRtpCodecCapability(capCodec); err != nil {
 			return

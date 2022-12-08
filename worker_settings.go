@@ -5,12 +5,16 @@ import (
 )
 
 type WorkerSettings struct {
+
 	// WorkerBin is the absolute path of worker binary. The default value is read
 	// in order from the following values: environment variable MEDIASOUP_WORKER_BIN,
 	// /usr/local/lib/node_modules/mediasoup/worker/out/Release/mediasoup-worker.
 	// To facilitate testing, it allows the use of the following pattern:
 	// valgrind --tool=memcheck --leak-check=full ./mediasoup-worker
 	WorkerBin string
+
+	//自定义的workname,用户日志打印区分
+	WorkerName string
 
 	// WorkerVersion is the version of mediasoup-worker. In order to communicate with
 	// mediasoup-worker, you must set this value correctly. If it is empty, mediasoup-go
@@ -89,6 +93,12 @@ type WorkerUpdatableSettings struct {
 func WithWorkerBin(workerBin string) Option {
 	return func(o *WorkerSettings) {
 		o.WorkerBin = workerBin
+	}
+}
+
+func WithWorkerName(workerName string) Option {
+	return func(o *WorkerSettings) {
+		o.WorkerName = workerName
 	}
 }
 

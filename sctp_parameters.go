@@ -62,7 +62,7 @@ type SctpStreamParameters struct {
 
 	// Ordered defines whether data messages must be received in order. If true the messages will
 	// be sent reliably. Default true.
-	Ordered *bool `json:"ordered,omitempty"`
+	Ordered bool `json:"ordered,omitempty"`
 
 	// MaxPacketLifeTime defines when ordered is false indicates the time (in milliseconds) after
 	// which a SCTP packet will stop being retransmitted.

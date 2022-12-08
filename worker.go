@@ -3,7 +3,6 @@ package mediasoup
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -14,10 +13,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/anjingxw/mediasoup-go/netcodec"
 	"github.com/go-logr/logr"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-version"
-	"github.com/anjingxw/mediasoup-go/netcodec"
 )
 
 var (
@@ -158,12 +157,15 @@ type Worker struct {
 
 	onNewWebRtcServer func(webRtcServer *WebRtcServer)
 	onNewRouter       func(router *Router)
+
+	OnLog func(int, string)
 }
 
 func NewWorker(options ...Option) (worker *Worker, err error) {
-	logger := NewLogger("Worker")
+
 	settings := &WorkerSettings{
 		WorkerBin:     WorkerBin,
+		WorkerName:    "Worker",
 		WorkerVersion: WorkerVersion,
 		LogLevel:      WorkerLogLevel_Error,
 		RtcMinPort:    10000,
@@ -175,6 +177,7 @@ func NewWorker(options ...Option) (worker *Worker, err error) {
 		option(settings)
 	}
 
+	logger := NewLogger(settings.WorkerName)
 	logger.V(1).Info("constructor()", "settings", settings)
 
 	var (
@@ -324,7 +327,7 @@ func NewWorker(options ...Option) (worker *Worker, err error) {
 		return nil, err
 	}
 
-	workerLogger := NewLogger(fmt.Sprintf("worker[pid:%d]", pid))
+	//workerLogger := NewLogger(fmt.Sprintf("worker[pid:%d]", pid))
 
 	go func() {
 		r := bufio.NewReader(stderr)
@@ -333,7 +336,10 @@ func NewWorker(options ...Option) (worker *Worker, err error) {
 			if err != nil {
 				break
 			}
-			workerLogger.Error(nil, "(stderr) "+string(line))
+			if worker.OnLog != nil {
+				worker.OnLog(0, string(line))
+			}
+			//workerLogger.Error(nil, "(stderr) "+)
 		}
 	}()
 
@@ -344,7 +350,9 @@ func NewWorker(options ...Option) (worker *Worker, err error) {
 			if err != nil {
 				break
 			}
-			workerLogger.V(1).Info("(stdout) " + string(line))
+			if worker.OnLog != nil {
+				worker.OnLog(1, string(line))
+			}
 		}
 	}()
 
@@ -514,10 +522,17 @@ func (w *Worker) UpdateSettings(settings WorkerUpdatableSettings) error {
 }
 
 // CreateWebRtcServer creates a WebRtcServer.
-func (w *Worker) CreateWebRtcServer(options WebRtcServerOptions) (webRtcServer *WebRtcServer, err error) {
+func (w *Worker) CreateWebRtcServer(options WebRtcServerOptions, webrtcServerId string) (webRtcServer *WebRtcServer, err error) {
 	w.logger.V(1).Info("createWebRtcServer()")
 
-	internal := internalData{WebRtcServerId: uuid.NewString()}
+	var serverId string
+	if len(webrtcServerId) > 0 {
+		serverId = webrtcServerId
+	} else {
+		uuid.NewString()
+	}
+
+	internal := internalData{WebRtcServerId: serverId}
 	reqData := H{
 		"webRtcServerId": internal.WebRtcServerId,
 		"listenInfos":    options.ListenInfos,

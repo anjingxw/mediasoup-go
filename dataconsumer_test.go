@@ -24,7 +24,7 @@ func (suite *DataConsumerTestingSuite) SetupTest() {
 	dataProducerParameters := DataProducerOptions{
 		SctpStreamParameters: &SctpStreamParameters{
 			StreamId:          12345,
-			Ordered:           Bool(false),
+			Ordered:           false,
 			MaxPacketLifeTime: 5000,
 		},
 		Label:    "foo",
@@ -39,14 +39,14 @@ func (suite *DataConsumerTestingSuite) SetupTest() {
 			{Ip: "127.0.0.1"},
 		},
 		EnableSctp: true,
-	})
+	}, "")
 	suite.NoError(err)
 	suite.transport2, err = suite.router.CreatePlainTransport(PlainTransportOptions{
 		ListenIp: TransportListenIp{
 			Ip: "127.0.0.1",
 		},
 		EnableSctp: true,
-	})
+	}, "")
 	suite.NoError(err)
 	suite.transport3, err = suite.router.CreateDirectTransport()
 	suite.NoError(err)
@@ -81,7 +81,7 @@ func (suite *DataConsumerTestingSuite) TestTransportConsumeDataSucceeds() {
 	suite.Equal(suite.dataProducer.Id(), dataConsumer1.DataProducerId())
 	suite.False(dataConsumer1.Closed())
 	suite.Equal(DataConsumerType_Sctp, dataConsumer1.Type())
-	suite.False(*dataConsumer1.SctpStreamParameters().Ordered)
+	suite.False(dataConsumer1.SctpStreamParameters().Ordered)
 	suite.EqualValues(4000, dataConsumer1.SctpStreamParameters().MaxPacketLifeTime)
 	suite.Zero(dataConsumer1.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", dataConsumer1.Label())
@@ -122,7 +122,7 @@ func (suite *DataConsumerTestingSuite) TestDataConsumerDumpSucceeds() {
 	suite.Equal("sctp", data.Type)
 	suite.NotNil(dataConsumer1.SctpStreamParameters())
 	suite.Equal(dataConsumer1.SctpStreamParameters().StreamId, data.SctpStreamParameters.StreamId)
-	suite.False(*data.SctpStreamParameters.Ordered)
+	suite.False(data.SctpStreamParameters.Ordered)
 	suite.EqualValues(4000, data.SctpStreamParameters.MaxPacketLifeTime)
 	suite.Zero(data.SctpStreamParameters.MaxRetransmits)
 	suite.Equal("foo", data.Label)

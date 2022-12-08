@@ -16,7 +16,7 @@ type DataConsumerOptions struct {
 	// Whether data messages must be received in order. If true the messages will
 	// be sent reliably. Defaults to the value in the DataProducer if it has type
 	// "sctp" or to true if it has type "direct".
-	Ordered *bool `json:"ordered,omitempty"`
+	Ordered bool `json:"ordered,omitempty"`
 
 	// MaxPacketLifeTime define just if consuming over SCTP.
 	// When ordered is false indicates the time (in milliseconds) after which a

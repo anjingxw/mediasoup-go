@@ -104,7 +104,7 @@ func main() {
 		ListenIps: []mediasoup.TransportListenIp{
 			{Ip: "0.0.0.0", AnnouncedIp: "192.168.1.101"}, // AnnouncedIp is optional
 		},
-	})
+	}, "")
 	if err != nil {
 		panic(err)
 	}
@@ -167,7 +167,7 @@ func main() {
 		ListenIps: []mediasoup.TransportListenIp{
 			{Ip: "0.0.0.0", AnnouncedIp: "192.168.1.101"}, // AnnouncedIp is optional
 		},
-	})
+	}, "")
 	if err != nil {
 		panic(err)
 	}

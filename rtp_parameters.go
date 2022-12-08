@@ -289,8 +289,8 @@ type RtcpParameters struct {
 
 	// ReducedSize defines whether reduced size RTCP RFC 5506 is configured (if true) or
 	// compound RTCP as specified in RFC 3550 (if false). Default true.
-	ReducedSize *bool `json:"reducedSize,omitempty"`
+	ReducedSize bool `json:"reducedSize,omitempty"`
 
 	// Mux defines whether RTCP-mux is used. Default true.
-	Mux *bool `json:"mux,omitempty"`
+	Mux bool `json:"mux,omitempty"`
 }

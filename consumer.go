@@ -9,6 +9,9 @@ import (
 
 // ConsumerOptions define options to create a Consumer.
 type ConsumerOptions struct {
+	//自己定义的ConsumerId
+	ConsumerId string `json:"consumerId,omitempty"`
+
 	// ProducerId is the id of the Producer to consume.
 	ProducerId string `json:"producerId,omitempty"`
 

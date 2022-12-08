@@ -16,7 +16,7 @@ type WebRtcTransportOptions struct {
 	ListenIps []TransportListenIp `json:"listenIps,omitempty"`
 
 	// EnableUdp enables listening in UDP. Default true.
-	EnableUdp *bool `json:"enableUdp,omitempty"`
+	EnableUdp bool `json:"enableUdp,omitempty"`
 
 	// EnableTcp enables listening in TCP. Default false.
 	EnableTcp bool `json:"enableTcp,omitempty"`
