@@ -70,7 +70,7 @@ func (suite *SctpTestingSuite) SetupTest() {
 	dataProducer, err := transport.ProduceData(DataProducerOptions{
 		SctpStreamParameters: &SctpStreamParameters{
 			StreamId: sctpSendStreamId,
-			Ordered:  Bool(true),
+			Ordered:  true,
 		},
 		Label:    "go-sctp",
 		Protocol: "foo & bar 😀😀😀",

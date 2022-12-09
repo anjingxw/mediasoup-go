@@ -23,7 +23,7 @@ func (suite *PlainTransportTestingSuite) SetupTest() {
 			Ip:          "127.0.0.1",
 			AnnouncedIp: "4.4.4.4",
 		},
-		RtcpMux: Bool(false),
+		RtcpMux: false,
 	})
 }
 
@@ -44,7 +44,7 @@ func (suite *PlainTransportTestingSuite) TestCreatePlainTransport_Succeeds() {
 			Ip:          "127.0.0.1",
 			AnnouncedIp: "9.9.9.1",
 		},
-		RtcpMux:    Bool(true),
+		RtcpMux:    true,
 		EnableSctp: true,
 		AppData:    appData,
 	})
@@ -97,7 +97,7 @@ func (suite *PlainTransportTestingSuite) TestCreatePlainTransport_Succeeds() {
 		ListenIp: TransportListenIp{
 			Ip: "127.0.0.1",
 		},
-		RtcpMux: Bool(false),
+		RtcpMux: false,
 	})
 	suite.NoError(err)
 	suite.False(transport2.Closed())

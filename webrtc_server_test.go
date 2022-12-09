@@ -253,7 +253,7 @@ func TestRouterCreateWebRtcTransportWithWebRtcServer(t *testing.T) {
 		transport, _ := router.CreateWebRtcTransport(WebRtcTransportOptions{
 			WebRtcServer: webRtcServer,
 			EnableTcp:    true,
-			EnableUdp:    Bool(false),
+			EnableUdp:    false,
 			AppData:      H{"foo": "bar"},
 		})
 		routerDump, _ := router.Dump()

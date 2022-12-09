@@ -42,6 +42,8 @@ type WebRtcTransportOptions struct {
 	// SctpSendBufferSize defines the maximum SCTP send buffer used by DataConsumers. Default 262144.
 	SctpSendBufferSize int `json:"sctpSendBufferSize,omitempty"`
 
+	TransportId string `json:"transportId,omitempty"`
+
 	// AppData is the custom application data.
 	AppData interface{} `json:"appData,omitempty"`
 }

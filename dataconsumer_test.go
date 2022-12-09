@@ -39,14 +39,14 @@ func (suite *DataConsumerTestingSuite) SetupTest() {
 			{Ip: "127.0.0.1"},
 		},
 		EnableSctp: true,
-	}, "")
+	})
 	suite.NoError(err)
 	suite.transport2, err = suite.router.CreatePlainTransport(PlainTransportOptions{
 		ListenIp: TransportListenIp{
 			Ip: "127.0.0.1",
 		},
 		EnableSctp: true,
-	}, "")
+	})
 	suite.NoError(err)
 	suite.transport3, err = suite.router.CreateDirectTransport()
 	suite.NoError(err)

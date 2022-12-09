@@ -25,6 +25,8 @@ type WebRtcServerOptions struct {
 	// Listen infos.
 	ListenInfos []WebRtcServerListenInfo
 
+	WebRtcServerId string
+
 	// appData
 	AppData interface{}
 }

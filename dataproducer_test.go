@@ -56,7 +56,7 @@ func (suite *DataProducerTestingSuite) TestTransport1ProduceDataSucceeds() {
 	suite.Equal(DataProducerType_Sctp, dataProducer1.Type())
 	suite.NotNil(dataProducer1.SctpStreamParameters())
 	suite.EqualValues(666, dataProducer1.SctpStreamParameters().StreamId)
-	suite.True(*dataProducer1.SctpStreamParameters().Ordered)
+	suite.True(dataProducer1.SctpStreamParameters().Ordered)
 	suite.Zero(dataProducer1.SctpStreamParameters().MaxPacketLifeTime)
 	suite.Zero(dataProducer1.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", dataProducer1.Label())
@@ -97,7 +97,7 @@ func (suite *DataProducerTestingSuite) TestTransport2ProduceDataSucceeds() {
 	suite.Equal(DataProducerType_Sctp, dataProducer2.Type())
 	suite.NotNil(dataProducer2.SctpStreamParameters())
 	suite.EqualValues(777, dataProducer2.SctpStreamParameters().StreamId)
-	suite.False(*dataProducer2.SctpStreamParameters().Ordered)
+	suite.False(dataProducer2.SctpStreamParameters().Ordered)
 	suite.Zero(dataProducer2.SctpStreamParameters().MaxPacketLifeTime)
 	suite.EqualValues(3, dataProducer2.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", dataProducer2.Label())
@@ -144,7 +144,7 @@ func (suite *DataProducerTestingSuite) TestProduceDataWithOrderedAndMaxPacketLif
 	_, err := suite.transport1.ProduceData(DataProducerOptions{
 		SctpStreamParameters: &SctpStreamParameters{
 			StreamId:          999,
-			Ordered:           Bool(true),
+			Ordered:           true,
 			MaxPacketLifeTime: 4000,
 		},
 	})
@@ -167,7 +167,7 @@ func (suite *DataProducerTestingSuite) TestDataProducerDumpSucceeds() {
 	suite.Equal("sctp", data.Type)
 	suite.NotNil(dataProducer1.SctpStreamParameters())
 	suite.Equal(dataProducer1.SctpStreamParameters().StreamId, data.SctpStreamParameters.StreamId)
-	suite.True(*data.SctpStreamParameters.Ordered)
+	suite.True(data.SctpStreamParameters.Ordered)
 	suite.Zero(data.SctpStreamParameters.MaxPacketLifeTime)
 	suite.Zero(data.SctpStreamParameters.MaxRetransmits)
 	suite.Equal("foo", data.Label)
@@ -188,7 +188,7 @@ func (suite *DataProducerTestingSuite) TestDataProducerDumpSucceeds() {
 	suite.Equal("sctp", data.Type)
 	suite.NotNil(dataProducer2.SctpStreamParameters())
 	suite.Equal(dataProducer2.SctpStreamParameters().StreamId, data.SctpStreamParameters.StreamId)
-	suite.False(*data.SctpStreamParameters.Ordered)
+	suite.False(data.SctpStreamParameters.Ordered)
 	suite.Zero(data.SctpStreamParameters.MaxPacketLifeTime)
 	suite.EqualValues(3, data.SctpStreamParameters.MaxRetransmits)
 	suite.Equal("foo", data.Label)

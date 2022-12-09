@@ -42,6 +42,8 @@ type PlainTransportOptions struct {
 	// 'AES_CM_128_HMAC_SHA1_80'.
 	SrtpCryptoSuite SrtpCryptoSuite `json:"srtpCryptoSuite,omitempty"`
 
+	TransportId string `json:"transportId,omitempty"`
+
 	// AppData is custom application data.
 	AppData interface{} `json:"appData,omitempty"`
 }

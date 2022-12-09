@@ -45,7 +45,7 @@ func (suite *PipeTransportTestingSuite) SetupTest() {
 	suite.dataProducer, _ = suite.transport1.ProduceData(DataProducerOptions{
 		SctpStreamParameters: &SctpStreamParameters{
 			StreamId:          666,
-			Ordered:           Bool(false),
+			Ordered:           false,
 			MaxPacketLifeTime: 5000,
 		},
 		Label:    "foo",
@@ -561,7 +561,7 @@ func (suite *PipeTransportTestingSuite) TestProducerPipeRouterSucceedsWithData()
 	suite.False(pipeDataConsumer.Closed())
 	suite.EqualValues("sctp", pipeDataConsumer.Type())
 	suite.NotNil(pipeDataConsumer.SctpStreamParameters())
-	suite.False(*pipeDataConsumer.SctpStreamParameters().Ordered)
+	suite.False(pipeDataConsumer.SctpStreamParameters().Ordered)
 	suite.EqualValues(5000, pipeDataConsumer.SctpStreamParameters().MaxPacketLifeTime)
 	suite.Zero(pipeDataConsumer.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", pipeDataConsumer.Label())
@@ -571,7 +571,7 @@ func (suite *PipeTransportTestingSuite) TestProducerPipeRouterSucceedsWithData()
 	suite.False(pipeDataProducer.Closed())
 	suite.EqualValues("sctp", pipeDataProducer.Type())
 	suite.NotNil(pipeDataProducer.SctpStreamParameters())
-	suite.False(*pipeDataProducer.SctpStreamParameters().Ordered)
+	suite.False(pipeDataProducer.SctpStreamParameters().Ordered)
 	suite.EqualValues(5000, pipeDataProducer.SctpStreamParameters().MaxPacketLifeTime)
 	suite.Zero(pipeDataProducer.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", pipeDataProducer.Label())
@@ -593,7 +593,7 @@ func (suite *PipeTransportTestingSuite) TestTransportDataConsumeForAPipeDataProd
 	suite.False(dataConsumer.Closed())
 	suite.EqualValues("sctp", dataConsumer.Type())
 	suite.NotNil(dataConsumer.SctpStreamParameters())
-	suite.False(*dataConsumer.SctpStreamParameters().Ordered)
+	suite.False(dataConsumer.SctpStreamParameters().Ordered)
 	suite.EqualValues(5000, dataConsumer.SctpStreamParameters().MaxPacketLifeTime)
 	suite.Zero(dataConsumer.SctpStreamParameters().MaxRetransmits)
 	suite.Equal("foo", dataConsumer.Label())

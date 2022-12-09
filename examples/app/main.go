@@ -51,9 +51,27 @@ var consumerDeviceCapabilities = mediasoup.RtpCapabilities{
 }
 
 func main() {
-	worker, err := mediasoup.NewWorker()
+	worker, err := mediasoup.NewWorker(mediasoup.WithLogLevel(mediasoup.WorkerLogLevel_Debug),
+		mediasoup.WithLogTags([]mediasoup.WorkerLogTag{
+			"info",
+			"ice",
+			"dtls",
+			"rtp",
+			"srtp",
+			"rtcp",
+			"rtx",
+			"bwe",
+			"score",
+			"simulcast",
+			"svc",
+			"sctp",
+		}))
 	if err != nil {
 		panic(err)
+	}
+
+	worker.OnLog = func(i int, s string) {
+
 	}
 	worker.On("died", func(err error) {
 		log.Printf("died: %s", err)
@@ -104,7 +122,7 @@ func main() {
 		ListenIps: []mediasoup.TransportListenIp{
 			{Ip: "0.0.0.0", AnnouncedIp: "192.168.1.101"}, // AnnouncedIp is optional
 		},
-	}, "")
+	})
 	if err != nil {
 		panic(err)
 	}
@@ -167,7 +185,7 @@ func main() {
 		ListenIps: []mediasoup.TransportListenIp{
 			{Ip: "0.0.0.0", AnnouncedIp: "192.168.1.101"}, // AnnouncedIp is optional
 		},
-	}, "")
+	})
 	if err != nil {
 		panic(err)
 	}

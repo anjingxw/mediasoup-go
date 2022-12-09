@@ -522,12 +522,12 @@ func (w *Worker) UpdateSettings(settings WorkerUpdatableSettings) error {
 }
 
 // CreateWebRtcServer creates a WebRtcServer.
-func (w *Worker) CreateWebRtcServer(options WebRtcServerOptions, webrtcServerId string) (webRtcServer *WebRtcServer, err error) {
+func (w *Worker) CreateWebRtcServer(options WebRtcServerOptions) (webRtcServer *WebRtcServer, err error) {
 	w.logger.V(1).Info("createWebRtcServer()")
 
 	var serverId string
-	if len(webrtcServerId) > 0 {
-		serverId = webrtcServerId
+	if len(options.WebRtcServerId) > 0 {
+		serverId = options.WebRtcServerId
 	} else {
 		uuid.NewString()
 	}
